@@ -1,0 +1,16 @@
+version: '3'
+
+services:
+  oauth2-demo:
+    container_name: oauth2
+    stdin_open: true
+    tty: true
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: oauth2:latest
+    volumes:
+      - .:/app
+      - ./docker-storage:/storage
+    ports:
+      - "8000:8000"
