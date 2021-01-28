@@ -20,6 +20,8 @@ from oauth2 import api
 api_patterns = [
     path('', api.index),
     path('index/', api.index),
+    path('otp/', api.send_otp),
+    path('authenticate/', api.validate_otp),
 
 ]
 
