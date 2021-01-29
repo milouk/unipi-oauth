@@ -1,0 +1,83 @@
+
+
+
+<html>
+    <head>
+  
+      <style>
+        .container {
+          height: 200px;
+          position: relative;
+          border: 3px solid blue;
+          top:300px;
+        }
+        .text-center {
+          top:80px;
+  
+        }
+        .vertical-center {
+          margin: 0;
+          position: absolute;
+          top: 50%;
+          -ms-transform: translateY(-50%);
+          transform: translateY(-50%);
+        }
+        </style>
+  
+      <meta name="google-signin-client_id" content="228423285676-0qakui6asjgpgeudhfpvk4aikh19ng2s.apps.googleusercontent.com">
+    
+      <!-- Minified CSS and JS -->
+    <link   rel="stylesheet"
+    href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+    integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+    crossorigin="anonymous">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+    integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+    crossorigin="anonymous">
+    </script>
+    
+    
+    </head>
+    <body>
+  
+  
+      <div class="container">
+        <div class="row">
+            <div class="col text-center">
+                <form id="loginwindow">
+                    <input type="password" name="password">
+                    <input type="hidden" id="otpId" name="otpId" value={{otp_input}}>
+                    <input type="submit" onclick=javascript:validate(password.value,otpId.value) value="OTP AUTHENTICATE" class="btn btn-primary">
+                </form>
+           </div>
+        </div>
+    </div>
+  
+  <!-- Minified CSS and JS -->
+  <link   rel="stylesheet"
+          href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+          crossorigin="anonymous">
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+          integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+          crossorigin="anonymous">
+  </script>
+  
+  <script type="text/javascript">
+
+    function validate(pass,otpid){
+        event.preventDefault();
+        if( pass != otpid){
+            window.location.href = "https://en.wikipedia.org/wiki/Hacker";
+        console.log(event.target['otpId'].value);
+        return;
+    }
+
+        alert("Success");
+        
+        //console.log(event.target['password'].value);
+    }
+</script>
+
+  </body>
+  </html>
