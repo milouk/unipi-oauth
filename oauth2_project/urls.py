@@ -23,6 +23,7 @@ api_patterns = [
     path('otp/', api.send_otp),
     path('logout/', api.logout),
     path('code_qr/', api.code_qr),
+    path('authenticate/', api.authenticate),
 
 ]
 
