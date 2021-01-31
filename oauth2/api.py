@@ -49,9 +49,20 @@ def code_qr(request):
     from PIL import Image
     import io
     import base64
-    
+    import socket
+
+
     name = 'Welcome to'
-    qr = qrcode.make('hello')
+
+    otp_four_digit = otp.generateOTP()
+    request.session['otp'] = otp_four_digit
+
+    hostname = socket.gethostname()
+    IPAddr = socket.gethostbyname(hostname)
+
+    uri = IPAddr + ':8000/authenticate?code=' + otp_four_digit
+
+    qr = qrcode.make(uri)
     qr.save('myqr.png')
 
     im = Image.open('/app/myqr.png', mode='r')
@@ -68,3 +79,9 @@ def code_qr(request):
         'image': html,
     }
     return render(request, 'qrcode.html', context)
+
+
+def authenticate(request):
+    if request.GET['code'] == request.session['otp']:
+        return True
+    return False
