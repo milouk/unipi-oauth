@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from oauth2.otp import otp
 import qrcode
+from oauth2.settings import BASE_APP_URL
 
 
 def index(request):
@@ -49,17 +50,16 @@ def code_qr(request):
     from PIL import Image
     import io
     import base64
-    import socket
-    
+
     name = 'QR CODE'
 
     otp_four_digit = otp.generateOTP()
-    request.session['otp'] = otp_four_digit
+    from oauth2.models import UserToken
+    user, _ = UserToken.objects.get_or_create(user_email=request.session['user']['email'])
+    user.token = otp_four_digit
+    user.save()
 
-    hostname = socket.gethostname()
-    IPAddr = socket.gethostbyname(hostname)
-
-    uri = "localhost" + ':8000/authenticate/?code=' + otp_four_digit+'&&otp='+request.session['otp']
+    uri = BASE_APP_URL + ':81/authenticate/?code=' + otp_four_digit
     qr = qrcode.make(uri)
     qr.save('myqr.png')
 
@@ -80,6 +80,8 @@ def code_qr(request):
 
 
 def authenticate(request):
-    if request.GET['otp'] == request.GET['code']:
+    from oauth2.models import UserToken
+    user = UserToken.objects.get(user_email=request.session['user']['email'])
+    if request.GET['code'] == user.token:
         return render(request, 'success.html')
     return False

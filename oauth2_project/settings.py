@@ -25,7 +25,10 @@ SECRET_KEY = '$y9dvwr9f)y_jl02+kqjl%eh60zi)6oqbskqe*(8sglu00=$g&'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+BASE_APP_URL = 'localhost'
+
+
+ALLOWED_HOSTS = [BASE_APP_URL]
 
 
 # Application definition
@@ -103,7 +106,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-AUTH_USER_MODEL = 'oauth2.User'
 
 # Internationalization
 # https://docs.djangoproject.com/en/2.2/topics/i18n/
@@ -135,7 +137,7 @@ OAUTH_CLIENT = {
     'access_token_url': 'https://www.googleapis.com/oauth2/v4/token',
     'authorize_url': 'https://accounts.google.com/o/oauth2/v2/auth',
     'api_base_url': 'https://www.googleapis.com/',
-    'redirect_uri': 'http://localhost:8000/oauth/callback',
+    'redirect_uri': BASE_APP_URL + ':81/oauth/callback',
     'client_kwargs': {
         'scope': 'openid profile email',
         'token_placement': 'header'
