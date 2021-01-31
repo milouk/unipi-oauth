@@ -46,7 +46,7 @@
             <div class="col text-center">
                 <form id="loginwindow">
                     <input type="password" name="password">
-                    <input type="hidden" id="otpId" name="otpId" value={{otp_input}}>
+                    <input type="hidden" id="otpId" name="otpId" value={{session.otp}}>
                     <input type="submit" onclick=javascript:validate(password.value,otpId.value) value="OTP AUTHENTICATE" class="btn btn-primary">
                 </form>
            </div>

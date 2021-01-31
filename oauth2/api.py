@@ -50,9 +50,8 @@ def code_qr(request):
     import io
     import base64
     import socket
-
-
-    name = 'Welcome to'
+    
+    name = 'QR CODE'
 
     otp_four_digit = otp.generateOTP()
     request.session['otp'] = otp_four_digit
@@ -60,8 +59,7 @@ def code_qr(request):
     hostname = socket.gethostname()
     IPAddr = socket.gethostbyname(hostname)
 
-    uri = IPAddr + ':8000/authenticate?code=' + otp_four_digit
-
+    uri = "localhost" + ':8000/authenticate/?code=' + otp_four_digit+'&&otp='+request.session['otp']
     qr = qrcode.make(uri)
     qr.save('myqr.png')
 
@@ -82,6 +80,6 @@ def code_qr(request):
 
 
 def authenticate(request):
-    if request.GET['code'] == request.session['otp']:
-        return True
+    if request.GET['otp'] == request.GET['code']:
+        return render(request, 'success.html')
     return False
