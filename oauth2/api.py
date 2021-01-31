@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect
 from oauth2.otp import otp
+import qrcode
 
 
 def index(request):
@@ -42,3 +43,45 @@ def logout(request):
     from oauth2.auth import OAuthMiddleware
     OAuthMiddleware().clear_session(request)
     return redirect('/')
+
+
+def code_qr(request):
+    from PIL import Image
+    import io
+    import base64
+    import socket
+
+
+    name = 'Welcome to'
+
+    otp_four_digit = otp.generateOTP()
+    request.session['otp'] = otp_four_digit
+
+    hostname = socket.gethostname()
+    IPAddr = socket.gethostbyname(hostname)
+
+    uri = IPAddr + ':8000/authenticate?code=' + otp_four_digit
+
+    qr = qrcode.make(uri)
+    qr.save('myqr.png')
+
+    im = Image.open('/app/myqr.png', mode='r')
+    buffer = io.BytesIO()
+    im.save(buffer, format='PNG')
+    buffer.seek(0)
+
+    data_uri = base64.b64encode(buffer.read()).decode('ascii')
+
+    html = "data:image/png;base64,{0}".format(data_uri)
+
+    context = {
+        'name': name,
+        'image': html,
+    }
+    return render(request, 'qrcode.html', context)
+
+
+def authenticate(request):
+    if request.GET['code'] == request.session['otp']:
+        return True
+    return False
