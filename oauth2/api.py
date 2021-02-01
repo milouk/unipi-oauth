@@ -82,6 +82,8 @@ def code_qr(request):
 def authenticate(request):
     from oauth2.models import UserToken
     user = UserToken.objects.get(user_email=request.session['user']['email'])
-    if request.GET['code'] == user.token:
-        return render(request, 'success.html')
+    if request.method == 'GET':
+        code = request.GET.get('code', None)
+        if code == user.token:
+            return render(request, 'success.html')
     return False
