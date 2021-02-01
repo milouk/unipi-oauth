@@ -49,7 +49,7 @@ def code_qr(request):
     import io
     import base64
 
-    name = 'Scand QR Code to Login'
+    name = 'Scan QR Code to Login'
 
     otp_four_digit = otp.generateOTP()
     from oauth2.models import UserToken
