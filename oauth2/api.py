@@ -1,8 +1,6 @@
 from django.shortcuts import render, redirect
 from oauth2.otp import otp
 import qrcode
-from oauth2.settings import BASE_APP_URL
-
 
 def index(request):
     name = request.session['user']['name']
@@ -51,7 +49,7 @@ def code_qr(request):
     import io
     import base64
 
-    name = 'QR CODE'
+    name = 'Scand QR Code to Login'
 
     otp_four_digit = otp.generateOTP()
     from oauth2.models import UserToken
@@ -59,7 +57,7 @@ def code_qr(request):
     user.token = otp_four_digit
     user.save()
 
-    uri = BASE_APP_URL + ':81/authenticate/?code=' + otp_four_digit
+    uri = 'mstavrou.ddns.net:8000/authenticate/?code=' + otp_four_digit
     qr = qrcode.make(uri)
     qr.save('myqr.png')
 
